@@ -340,9 +340,9 @@ rawdata<-na.omit(rawdata)
 dev = rawdata[rawdata$group==1,]     
 vad = rawdata[rawdata$group==2,] 
 
-fcox<-coxph(Surv(OS,S)~ Glob + Mon+Palb+TumorNumber+TumorSize+Age,
+fcox<-coxph(Surv(OS,S)~ Glob + Mon+Palb,
             data = dev)
-fcox2<-coxph(Surv(OS,S)~ Glob + Mon+Palb+TumorNumber+TumorSize+Age+ChildPugh+TBIL,
+fcox2<-coxph(Surv(OS,S)~ Glob + Mon+Palb,
              data = vad)
 
 dev$Nomogram<-c(1-summary(survfit(fcox,newdata=dev),times = 3)$surv)
@@ -388,11 +388,11 @@ dca5<-stdca(data = vad,
             predictors = "Nomogram",
             xstop = 0.5,            
             smooth = TRUE)
-vad$Nomogram<-c(1-summary(survfit(fcox2,newdata=vad),times = 7)$surv)
+vad$Nomogram<-c(1-summary(survfit(fcox2,newdata=vad),times = 8)$surv)
 dca6<-stdca(data = vad,
             outcome = "S",
             ttoutcome = "OS",
-            timepoint = 7,
+            timepoint = 8,
             predictors = "Nomogram",
             xstop = 0.55,            
             smooth = TRUE)
